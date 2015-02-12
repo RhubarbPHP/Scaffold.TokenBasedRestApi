@@ -1,7 +1,7 @@
 {
-  "name": "rhubarbphp/scaffold-token-base-restapi",
-  "description": "Provides some an out of the box solution for login and authentication.",
-  "keywords": [ "authentication", "rhubarb", "php", "framework" ],
+  "name": "rhubarbphp/scaffold-token-based-restapi",
+  "description": "Provides a support for doing token based authentication for a ReST API",
+  "keywords": [ "rest", "api", "token", "rhubarb", "php", "framework" ],
   "homepage": "http://www.rhubarbphp.com/",
   "license": "Apache-2.0",
   "autoload": {
