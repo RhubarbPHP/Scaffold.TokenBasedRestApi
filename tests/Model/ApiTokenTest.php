@@ -84,9 +84,9 @@ class UnitTestTokenBaseRestApiSolutionSchema extends SolutionSchema
         parent::__construct($version);
     }
 
-    protected function DefineRelationships()
+    protected function defineRelationships()
     {
-        parent::DefineRelationships();
+        parent::defineRelationships();
 
         $this->DeclareOneToManyRelationships(
             [
