@@ -1,0 +1,22 @@
+{
+  "name": "rhubarbphp/scaffold-token-based-restapi",
+  "description": "Provides a support for doing token based authentication for a ReST API",
+  "keywords": [ "rest", "api", "token", "rhubarb", "php", "framework" ],
+  "homepage": "http://www.rhubarbphp.com/",
+  "license": "Apache-2.0",
+  "autoload": {
+    "psr-4": {
+      "Rhubarb\\Scaffolds\\TokenBasedRestApi\\": "src/",
+      "Rhubarb\\Scaffolds\\TokenBasedRestApi\\Tests\\": "tests/"
+    }
+  },
+  "require": {
+    "rhubarbphp/module-restapi": "dev-feature/MigrationFromCore",
+    "rhubarbphp/module-stem": "dev-migration",
+    "rhubarbphp/rhubarb": "dev-crown"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "3.*"
+  }
+}
+
