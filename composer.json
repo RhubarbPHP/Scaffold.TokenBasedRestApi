@@ -11,9 +11,9 @@
     }
   },
   "require": {
-    "rhubarbphp/module-restapi": "dev-feature/MigrationFromCore",
-    "rhubarbphp/module-stem": "dev-migration",
-    "rhubarbphp/rhubarb": "dev-crown"
+    "rhubarbphp/module-restapi": "*",
+    "rhubarbphp/module-stem": "*",
+    "rhubarbphp/rhubarb": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "3.*"
