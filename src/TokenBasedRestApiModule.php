@@ -33,8 +33,8 @@ class TokenBasedRestApiModule extends Module
     private static $authenticationUserModelName = "User";
 
     public function __construct(
-        $loginProviderAuthenticationProviderClassName,
-        $tokenAuthenticationProviderClassName,
+        $loginProviderAuthenticationProviderClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders\LoginProviderCredentialsAuthenticationProvider',
+        $tokenAuthenticationProviderClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders\LoginProviderTokenAuthenticationProvider',
         $apiStubUrl = "/api/",
         $authenticationUserModelName = "User",
         $tokenResourceClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Resources\TokenResource'
