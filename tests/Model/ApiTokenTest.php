@@ -20,8 +20,10 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi\Tests\Model;
 
 use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Scaffolds\Authentication\DatabaseSchema;
 use Rhubarb\Scaffolds\Authentication\User;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Model\ApiToken;
+use Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 class ApiTokenTest extends RhubarbTestCase
@@ -30,12 +32,9 @@ class ApiTokenTest extends RhubarbTestCase
     {
         parent::setUpBeforeClass();
 
-        SolutionSchema::registerSchema("Authentication",
-            "\Rhubarb\Scaffolds\Authentication\DatabaseSchema");
-        SolutionSchema::registerSchema("TokenBasedRestApi",
-            "\Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema");
-        SolutionSchema::registerSchema("ApiTokenTest",
-            "\Rhubarb\Scaffolds\TokenBasedRestApi\Tests\Model\UnitTestTokenBaseRestApiSolutionSchema");
+        SolutionSchema::registerSchema("Authentication", DatabaseSchema::class);
+        SolutionSchema::registerSchema("TokenBasedRestApi", TokenBasedRestApiSolutionSchema::class);
+        SolutionSchema::registerSchema("ApiTokenTest", UnitTestTokenBaseRestApiSolutionSchema::class);
     }
 
     public function testTokenGetsExpiry()
@@ -44,7 +43,7 @@ class ApiTokenTest extends RhubarbTestCase
         $token->Token = "abc123";
         $token->Save();
 
-        $this->assertInstanceOf("Rhubarb\Crown\DateTime\RhubarbDateTime", $token->Expires);
+        $this->assertInstanceOf(RhubarbDateTime::class, $token->Expires);
         $this->assertGreaterThanOrEqual(new RhubarbDateTime("+1 day"), $token->Expires);
     }
 
