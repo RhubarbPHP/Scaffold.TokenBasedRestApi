@@ -39,7 +39,7 @@ class TokenCreationUrlHandler extends RestResourceHandler
         return ["post"];
     }
 
-    protected function getResource()
+    protected function getRestResource()
     {
         $className = $this->apiResourceClassName;
         $authenticationProvider = $this->createAuthenticationProvider();
