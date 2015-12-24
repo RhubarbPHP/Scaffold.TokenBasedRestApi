@@ -27,10 +27,10 @@ use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
 use Rhubarb\Stem\Repositories\MySql\Schema\Index;
 use Rhubarb\Stem\Repositories\MySql\Schema\MySqlModelSchema;
-use Rhubarb\Stem\Schema\Columns\AutoIncrement;
-use Rhubarb\Stem\Schema\Columns\DateTime;
-use Rhubarb\Stem\Schema\Columns\ForeignKey;
-use Rhubarb\Stem\Schema\Columns\String;
+use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
+use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
+use Rhubarb\Stem\Schema\Columns\ForeignKeyColumn;
+use Rhubarb\Stem\Schema\Columns\StringColumn;
 
 class ApiToken extends Model
 {
@@ -39,11 +39,11 @@ class ApiToken extends Model
         $schema = new MySqlModelSchema("tblApiToken");
 
         $schema->addColumn(
-            new AutoIncrement("ApiTokenID"),
-            new ForeignKey("AuthenticatedUserID"),
-            new String("Token", 100),
-            new String("IpAddress", 20),
-            new DateTime("Expires")
+            new AutoIncrementColumn("ApiTokenID"),
+            new ForeignKeyColumn("AuthenticatedUserID"),
+            new StringColumn("Token", 100),
+            new StringColumn("IpAddress", 20),
+            new DateTimeColumn("Expires")
         );
 
         $schema->labelColumnName = "Token";
