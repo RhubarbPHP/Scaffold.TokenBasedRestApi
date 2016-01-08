@@ -18,10 +18,13 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Model;
 
+use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Exceptions\TokenInvalidException;
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\AndGroup;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Filters\GreaterThan;
+use Rhubarb\Stem\Filters\LessThan;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
@@ -87,6 +90,31 @@ class ApiToken extends Model
         $token->IpAddress = $ipAddress;
         $token->Token = $tokenString;
         $token->save();
+
+        return $token;
+    }
+
+    /**
+     * Looks up an existing valid token for the user at the specified IP address. If none is found, it
+     * creates a new one.
+     *
+     * @param Model $user
+     * @param string $ipAddress Usually the current HTTP requester's IP, retrieved from $_SERVER[REMOTE_ADDR]
+     * @return ApiToken
+     */
+    public static function retrieveOrCreateToken(Model $user, $ipAddress)
+    {
+        try {
+            $token = self::findFirst(new AndGroup([
+                new Equals("AuthenticatedUserID", $user->UniqueIdentifier),
+                new Equals("IpAddress", $ipAddress),
+                new GreaterThan("Expires", "now", true)
+            ]));
+
+            $token->save();
+        } catch (RecordNotFoundException $ex) {
+            $token = self::createToken($user, $ipAddress);
+        }
 
         return $token;
     }
