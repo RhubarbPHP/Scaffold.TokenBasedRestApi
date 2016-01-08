@@ -18,13 +18,11 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Model;
 
-use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Exceptions\TokenInvalidException;
 use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\AndGroup;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Filters\GreaterThan;
-use Rhubarb\Stem\Filters\LessThan;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
@@ -37,6 +35,8 @@ use Rhubarb\Stem\Schema\Columns\String;
 
 class ApiToken extends Model
 {
+    const TOKEN_EXPIRATION = "+1 day";
+
     protected function createSchema()
     {
         $schema = new MySqlModelSchema("tblApiToken");
@@ -111,6 +111,7 @@ class ApiToken extends Model
                 new GreaterThan("Expires", "now", true)
             ]));
 
+            $token->Expires = self::TOKEN_EXPIRATION;
             $token->save();
         } catch (RecordNotFoundException $ex) {
             $token = self::createToken($user, $ipAddress);
@@ -130,7 +131,7 @@ class ApiToken extends Model
     protected function beforeSave()
     {
         if ($this->isNewRecord()) {
-            $this->Expires = "+1 day";
+            $this->Expires = self::TOKEN_EXPIRATION;
         }
 
         parent::beforeSave();
