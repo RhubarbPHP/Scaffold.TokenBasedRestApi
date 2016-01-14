@@ -25,18 +25,18 @@ use Rhubarb\Stem\Filters\GreaterThan;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
-use Rhubarb\Stem\Repositories\MySql\Schema\Index;
-use Rhubarb\Stem\Repositories\MySql\Schema\MySqlModelSchema;
+use Rhubarb\Stem\Schema\Index;
 use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
 use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
 use Rhubarb\Stem\Schema\Columns\ForeignKeyColumn;
 use Rhubarb\Stem\Schema\Columns\StringColumn;
+use Rhubarb\Stem\Schema\ModelSchema;
 
 class ApiToken extends Model
 {
     protected function createSchema()
     {
-        $schema = new MySqlModelSchema("tblApiToken");
+        $schema = new ModelSchema("tblApiToken");
 
         $schema->addColumn(
             new AutoIncrementColumn("ApiTokenID"),
