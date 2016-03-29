@@ -18,33 +18,32 @@ abstract class TokenAuthenticatedRestApiClientTestCase extends RhubarbTestCase
         return "/tokens";
     }
 
-    abstract protected function GetUsername();
+    abstract protected function getUsername();
 
-    abstract protected function GetPassword();
+    abstract protected function getPassword();
 
-    protected function GetToken()
+    protected function getToken()
     {
         return false;
     }
 
-    public function MakeApiCall( $uri, $method = "get", $payload = null )
+    public function makeApiCall($uri, $method = "get", $payload = null)
     {
         $client = new TokenAuthenticatedRestClient(
-            $this->GetApiUri(),
-            $this->GetUsername(),
-            $this->GetPassword(),
-            $this->GetTokensUri()
+            $this->getApiUri(),
+            $this->getUsername(),
+            $this->getPassword(),
+            $this->getTokensUri()
         );
 
-        $token = $this->GetToken();
+        $token = $this->getToken();
 
-        if ( $token )
-        {
-            $client->SetToken( $token );
+        if ($token) {
+            $client->setToken($token);
         }
 
-        $request = new RestHttpRequest( $uri, $method, $payload );
-        $response = $client->MakeRequest( $request );
+        $request = new RestHttpRequest($uri, $method, $payload);
+        $response = $client->makeRequest($request);
 
         return $response;
     }

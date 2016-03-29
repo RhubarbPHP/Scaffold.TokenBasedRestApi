@@ -41,7 +41,7 @@ class ApiTokenTest extends RhubarbTestCase
     {
         $token = new ApiToken();
         $token->Token = "abc123";
-        $token->Save();
+        $token->save();
 
         $this->assertInstanceOf(RhubarbDateTime::class, $token->Expires);
         $this->assertGreaterThanOrEqual(new RhubarbDateTime("+1 day"), $token->Expires);
@@ -52,7 +52,7 @@ class ApiTokenTest extends RhubarbTestCase
         $user = new User();
         $user->Username = "billy";
         $user->Forename = "bob";
-        $user->Save();
+        $user->save();
 
         $token = ApiToken::createToken($user, "127.0.0.5");
 
@@ -65,7 +65,7 @@ class ApiTokenTest extends RhubarbTestCase
         $user = new User();
         $user->Username = "billy2";
         $user->Forename = "bob2";
-        $user->Save();
+        $user->save();
 
         $token = ApiToken::createToken($user, "127.0.0.5");
 
@@ -87,7 +87,7 @@ class UnitTestTokenBaseRestApiSolutionSchema extends SolutionSchema
     {
         parent::defineRelationships();
 
-        $this->DeclareOneToManyRelationships(
+        $this->declareOneToManyRelationships(
             [
                 "User" =>
                     [
