@@ -64,7 +64,7 @@ class TokenBasedRestApiModule extends Module
         SolutionSchema::registerSchema("TokenBasedRestApi",
             '\Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema');
 
-        AuthenticationProvider::setDefaultAuthenticationProviderClassName($this->tokenAuthenticationProviderClassName);
+        AuthenticationProvider::setProviderClassName($this->tokenAuthenticationProviderClassName);
 
         $tokenHandler = new TokenCreationUrlHandler($this->loginProviderAuthenticationProviderClassName, [],
             $this->tokenResourceClassName);
