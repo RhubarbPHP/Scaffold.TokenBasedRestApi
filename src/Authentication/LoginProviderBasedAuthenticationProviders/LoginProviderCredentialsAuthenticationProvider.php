@@ -25,6 +25,6 @@ class LoginProviderCredentialsAuthenticationProvider extends ModelLoginProviderA
 {
     protected function getLoginProviderClassName()
     {
-        return LoginProvider::getDefaultLoginProviderClassName();
+        return LoginProvider::class;
     }
 }

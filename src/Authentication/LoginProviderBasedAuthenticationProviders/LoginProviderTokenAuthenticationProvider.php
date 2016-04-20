@@ -26,7 +26,7 @@ class LoginProviderTokenAuthenticationProvider extends TokenAuthenticationProvid
 {
     protected function logUserIn(Model $user)
     {
-        $loginProvider = LoginProvider::getDefaultLoginProvider();
+        $loginProvider = LoginProvider::getProvider();
         $loginProvider->forceLogin($user);
     }
 }
