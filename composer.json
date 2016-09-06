@@ -11,13 +11,13 @@
     }
   },
   "require": {
-    "rhubarbphp/module-restapi": "*",
-    "rhubarbphp/module-stem": "*",
-    "rhubarbphp/rhubarb": "*"
+    "rhubarbphp/module-restapi": "^1.0",
+    "rhubarbphp/module-stem": "^1.1",
+    "rhubarbphp/rhubarb": "^1.1"
   },
   "require-dev": {
     "phpunit/phpunit": "4.*",
-    "codeception/codeception": "*"
+    "codeception/codeception": "^2.0.0"
   }
 }
 
