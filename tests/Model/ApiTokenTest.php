@@ -20,8 +20,10 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi\Tests\Model;
 
 use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Crown\Tests\RhubarbTestCase;
+use Rhubarb\Scaffolds\Authentication\DatabaseSchema;
 use Rhubarb\Scaffolds\Authentication\User;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Model\ApiToken;
+use Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
 class ApiTokenTest extends RhubarbTestCase
@@ -30,21 +32,18 @@ class ApiTokenTest extends RhubarbTestCase
     {
         parent::setUpBeforeClass();
 
-        SolutionSchema::registerSchema("Authentication",
-            "\Rhubarb\Scaffolds\Authentication\DatabaseSchema");
-        SolutionSchema::registerSchema("TokenBasedRestApi",
-            "\Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema");
-        SolutionSchema::registerSchema("ApiTokenTest",
-            "\Rhubarb\Scaffolds\TokenBasedRestApi\Tests\Model\UnitTestTokenBaseRestApiSolutionSchema");
+        SolutionSchema::registerSchema("Authentication", DatabaseSchema::class);
+        SolutionSchema::registerSchema("TokenBasedRestApi", TokenBasedRestApiSolutionSchema::class);
+        SolutionSchema::registerSchema("ApiTokenTest", UnitTestTokenBaseRestApiSolutionSchema::class);
     }
 
     public function testTokenGetsExpiry()
     {
         $token = new ApiToken();
         $token->Token = "abc123";
-        $token->Save();
+        $token->save();
 
-        $this->assertInstanceOf("Rhubarb\Crown\DateTime\RhubarbDateTime", $token->Expires);
+        $this->assertInstanceOf(RhubarbDateTime::class, $token->Expires);
         $this->assertGreaterThanOrEqual(new RhubarbDateTime("+1 day"), $token->Expires);
     }
 
@@ -53,7 +52,7 @@ class ApiTokenTest extends RhubarbTestCase
         $user = new User();
         $user->Username = "billy";
         $user->Forename = "bob";
-        $user->Save();
+        $user->save();
 
         $token = ApiToken::createToken($user, "127.0.0.5");
 
@@ -66,7 +65,7 @@ class ApiTokenTest extends RhubarbTestCase
         $user = new User();
         $user->Username = "billy2";
         $user->Forename = "bob2";
-        $user->Save();
+        $user->save();
 
         $token = ApiToken::createToken($user, "127.0.0.5");
 
@@ -88,7 +87,7 @@ class UnitTestTokenBaseRestApiSolutionSchema extends SolutionSchema
     {
         parent::defineRelationships();
 
-        $this->DeclareOneToManyRelationships(
+        $this->declareOneToManyRelationships(
             [
                 "User" =>
                     [

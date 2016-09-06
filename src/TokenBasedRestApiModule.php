@@ -33,8 +33,8 @@ class TokenBasedRestApiModule extends Module
     private static $authenticationUserModelName = "User";
 
     public function __construct(
-        $loginProviderAuthenticationProviderClassName,
-        $tokenAuthenticationProviderClassName,
+        $loginProviderAuthenticationProviderClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders\LoginProviderCredentialsAuthenticationProvider',
+        $tokenAuthenticationProviderClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders\LoginProviderTokenAuthenticationProvider',
         $apiStubUrl = "/api/",
         $authenticationUserModelName = "User",
         $tokenResourceClassName = '\Rhubarb\Scaffolds\TokenBasedRestApi\Resources\TokenResource'
@@ -64,7 +64,7 @@ class TokenBasedRestApiModule extends Module
         SolutionSchema::registerSchema("TokenBasedRestApi",
             '\Rhubarb\Scaffolds\TokenBasedRestApi\Model\TokenBasedRestApiSolutionSchema');
 
-        AuthenticationProvider::setDefaultAuthenticationProviderClassName($this->tokenAuthenticationProviderClassName);
+        AuthenticationProvider::setProviderClassName($this->tokenAuthenticationProviderClassName);
 
         $tokenHandler = new TokenCreationUrlHandler($this->loginProviderAuthenticationProviderClassName, [],
             $this->tokenResourceClassName);

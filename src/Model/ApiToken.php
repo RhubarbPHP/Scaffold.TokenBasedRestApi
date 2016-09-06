@@ -19,31 +19,34 @@
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Model;
 
 use Rhubarb\Scaffolds\TokenBasedRestApi\Exceptions\TokenInvalidException;
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\AndGroup;
 use Rhubarb\Stem\Filters\Equals;
 use Rhubarb\Stem\Filters\GreaterThan;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\AutoIncrement;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\DateTime;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\ForeignKey;
-use Rhubarb\Stem\Repositories\MySql\Schema\Columns\Varchar;
-use Rhubarb\Stem\Repositories\MySql\Schema\Index;
-use Rhubarb\Stem\Repositories\MySql\Schema\MySqlSchema;
+use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
+use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
+use Rhubarb\Stem\Schema\Columns\ForeignKeyColumn;
+use Rhubarb\Stem\Schema\Columns\StringColumn;
+use Rhubarb\Stem\Schema\Index;
+use Rhubarb\Stem\Schema\ModelSchema;
 
 class ApiToken extends Model
 {
+    const TOKEN_EXPIRATION = "+1 day";
+
     protected function createSchema()
     {
-        $schema = new MySqlSchema("tblApiToken");
+        $schema = new ModelSchema("tblApiToken");
 
         $schema->addColumn(
-            new AutoIncrement("ApiTokenID"),
-            new ForeignKey("AuthenticatedUserID"),
-            new Varchar("Token", 100),
-            new Varchar("IpAddress", 20),
-            new DateTime("Expires")
+            new AutoIncrementColumn("ApiTokenID"),
+            new ForeignKeyColumn("AuthenticatedUserID"),
+            new StringColumn("Token", 100),
+            new StringColumn("IpAddress", 20),
+            new DateTimeColumn("Expires")
         );
 
         $schema->labelColumnName = "Token";
@@ -91,6 +94,32 @@ class ApiToken extends Model
         return $token;
     }
 
+    /**
+     * Looks up an existing valid token for the user at the specified IP address. If none is found, it
+     * creates a new one.
+     *
+     * @param Model $user
+     * @param string $ipAddress Usually the current HTTP requester's IP, retrieved from $_SERVER[REMOTE_ADDR]
+     * @return ApiToken
+     */
+    public static function retrieveOrCreateToken(Model $user, $ipAddress)
+    {
+        try {
+            $token = self::findFirst(new AndGroup([
+                new Equals("AuthenticatedUserID", $user->UniqueIdentifier),
+                new Equals("IpAddress", $ipAddress),
+                new GreaterThan("Expires", "now", true)
+            ]));
+
+            $token->Expires = self::TOKEN_EXPIRATION;
+            $token->save();
+        } catch (RecordNotFoundException $ex) {
+            $token = self::createToken($user, $ipAddress);
+        }
+
+        return $token;
+    }
+
     protected function createConsistencyValidator()
     {
         $validator = new Validator();
@@ -102,7 +131,7 @@ class ApiToken extends Model
     protected function beforeSave()
     {
         if ($this->isNewRecord()) {
-            $this->Expires = "+1 day";
+            $this->Expires = self::TOKEN_EXPIRATION;
         }
 
         parent::beforeSave();
