@@ -18,6 +18,7 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Model;
 
+use Rhubarb\Scaffolds\TokenBasedRestApi\ApiSettings;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Exceptions\TokenInvalidException;
 use Rhubarb\Stem\Exceptions\RecordNotFoundException;
 use Rhubarb\Stem\Filters\AndGroup;
@@ -35,6 +36,7 @@ use Rhubarb\Stem\Schema\ModelSchema;
 
 class ApiToken extends Model
 {
+    /** @deprecated Use ApiSettings::$tokenExpiration */
     const TOKEN_EXPIRATION = "+1 day";
 
     protected function createSchema()
@@ -76,7 +78,13 @@ class ApiToken extends Model
             throw new TokenInvalidException();
         }
 
+        /** @var ApiToken $token */
         $token = $tokens[0];
+        $settings = ApiSettings::singleton();
+        if ($settings->extendTokenExpirationOnUse) {
+            $token->Expires = $settings->tokenExpiration;
+            $token->save();
+        }
 
         return $token->AuthenticatedUser;
     }
@@ -110,8 +118,7 @@ class ApiToken extends Model
                 new Equals("IpAddress", $ipAddress),
                 new GreaterThan("Expires", "now", true)
             ]));
-
-            $token->Expires = self::TOKEN_EXPIRATION;
+            $token->Expires = ApiSettings::singleton()->tokenExpiration;
             $token->save();
         } catch (RecordNotFoundException $ex) {
             $token = self::createToken($user, $ipAddress);
@@ -131,7 +138,7 @@ class ApiToken extends Model
     protected function beforeSave()
     {
         if ($this->isNewRecord()) {
-            $this->Expires = self::TOKEN_EXPIRATION;
+            $this->Expires = ApiSettings::singleton()->tokenExpiration;
         }
 
         parent::beforeSave();
