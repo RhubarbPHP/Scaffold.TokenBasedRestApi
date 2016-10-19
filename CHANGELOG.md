@@ -1,5 +1,11 @@
 # Change Log
 
+### 2.0.*
+
+### 2.0.0
+
+* Changed:  RestApi module upgrade
+
 ### 1.1.1
 * Added:    ApiSettings class
 * Changed:  Token expiration time is pulled from settings. Old constant deprecated
