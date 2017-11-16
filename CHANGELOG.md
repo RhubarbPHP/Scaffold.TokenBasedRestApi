@@ -2,6 +2,10 @@
 
 ### 2.0.*
 
+### 2.0.1
+
+* Added:    Support to catch LoginExpired and Login Locked Out exceptions and throw a relevant response
+
 ### 2.0.0
 
 * Changed:  RestApi module upgrade
