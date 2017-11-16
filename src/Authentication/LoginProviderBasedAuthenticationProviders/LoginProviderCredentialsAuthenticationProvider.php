@@ -18,13 +18,34 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders;
 
+use Rhubarb\Crown\Exceptions\ForceResponseException;
+use Rhubarb\Crown\LoginProviders\Exceptions\LoginFailedException;
+use Rhubarb\Crown\Request\Request;
+use Rhubarb\Crown\Response\BasicAuthorisationRequiredResponse;
+use Rhubarb\Crown\Response\ExpiredResponse;
+use Rhubarb\Crown\Response\TooManyLoginAttemptsResponse;
 use Rhubarb\RestApi\Authentication\CredentialsLoginProviderAuthenticationProvider;
-use Rhubarb\Scaffolds\Authentication\LoginProviders\LoginProvider;
+use Rhubarb\Scaffolds\Authentication\Exceptions\LoginExpiredException;
+use Rhubarb\Scaffolds\Authentication\Exceptions\LoginTemporarilyLockedOutException;
+use Somervilles\WebApp\Providers\SomervillesLoginProvider;
 
 class LoginProviderCredentialsAuthenticationProvider extends CredentialsLoginProviderAuthenticationProvider
 {
     protected function getLoginProviderClassName()
     {
-        return LoginProvider::class;
+        return SomervillesLoginProvider::class;
+    }
+
+    public function authenticate(Request $request)
+    {
+        try {
+            return parent::authenticate($request);
+        } catch (LoginExpiredException $ex) {
+            throw new ForceResponseException(new ExpiredResponse("API"));
+        } catch (LoginTemporarilyLockedOutException $ex) {
+            throw new ForceResponseException(new TooManyLoginAttemptsResponse("API"));
+        } catch (LoginFailedException $ex) {
+            throw new ForceResponseException(new BasicAuthorisationRequiredResponse("API"));
+        }
     }
 }
