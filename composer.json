@@ -11,7 +11,8 @@
     }
   },
   "require": {
-    "rhubarbphp/module-restapi": "^2.0",
+    "rhubarbphp/module-restapi": "^2.0.6",
+    "rhubarbphp/scaffold-authentication": "^1.2.2",
     "rhubarbphp/module-stem": "^1.1",
     "rhubarbphp/rhubarb": "^1.1"
   },

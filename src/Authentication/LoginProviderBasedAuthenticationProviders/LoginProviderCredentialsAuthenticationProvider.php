@@ -18,10 +18,10 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders;
 
-use Rhubarb\RestApi\Authentication\ModelLoginProviderAuthenticationProvider;
+use Rhubarb\RestApi\Authentication\CredentialsLoginProviderAuthenticationProvider;
 use Rhubarb\Scaffolds\Authentication\LoginProviders\LoginProvider;
 
-class LoginProviderCredentialsAuthenticationProvider extends ModelLoginProviderAuthenticationProvider
+class LoginProviderCredentialsAuthenticationProvider extends CredentialsLoginProviderAuthenticationProvider
 {
     protected function getLoginProviderClassName()
     {
