@@ -27,13 +27,14 @@ use Rhubarb\Crown\Response\TooManyLoginAttemptsResponse;
 use Rhubarb\RestApi\Authentication\CredentialsLoginProviderAuthenticationProvider;
 use Rhubarb\Scaffolds\Authentication\Exceptions\LoginExpiredException;
 use Rhubarb\Scaffolds\Authentication\Exceptions\LoginTemporarilyLockedOutException;
-use Somervilles\WebApp\Providers\SomervillesLoginProvider;
+use Rhubarb\Scaffolds\Authentication\LoginProviders\LoginProvider;
+
 
 class LoginProviderCredentialsAuthenticationProvider extends CredentialsLoginProviderAuthenticationProvider
 {
     protected function getLoginProviderClassName()
     {
-        return SomervillesLoginProvider::class;
+        return LoginProvider::class;
     }
 
     public function authenticate(Request $request)
