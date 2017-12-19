@@ -1,6 +1,8 @@
 # Change Log
 
-### 2.0.*
+### 2.0.2
+
+* Fixed:    Fixed issue with Incorrect LoginProvider being used
 
 ### 2.0.1
 
