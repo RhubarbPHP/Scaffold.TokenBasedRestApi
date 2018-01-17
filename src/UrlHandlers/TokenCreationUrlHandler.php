@@ -18,11 +18,15 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\UrlHandlers;
 
+use Rhubarb\Crown\Request\Request;
+use Rhubarb\Crown\Request\WebRequest;
+use Rhubarb\Crown\Response\Response;
 use Rhubarb\RestApi\UrlHandlers\RestResourceHandler;
 
 class TokenCreationUrlHandler extends RestResourceHandler
 {
     private $authenticationProviderClassName;
+    private $urlToken;
 
     public function __construct(
         $authenticationProviderClassName,
@@ -36,7 +40,7 @@ class TokenCreationUrlHandler extends RestResourceHandler
 
     protected function getSupportedHttpMethods()
     {
-        return ["post"];
+        return ["post", "delete"];
     }
 
     protected function getRestResource()
@@ -46,6 +50,12 @@ class TokenCreationUrlHandler extends RestResourceHandler
         $loginProvider = $authenticationProvider->getLoginProvider();
         $resource = new $className($loginProvider);
 
+        if (!empty($this->urlToken)) {
+            if (property_exists($resource, 'tokenToDelete')) {
+                $resource->tokenToDelete = $this->urlToken;
+            }
+        }
+
         return $resource;
     }
 
@@ -54,5 +64,27 @@ class TokenCreationUrlHandler extends RestResourceHandler
         $class = $this->authenticationProviderClassName;
 
         return new $class();
+    }
+
+    protected function authenticate(Request $request)
+    {
+        $method = strtolower($request->server("REQUEST_METHOD"));
+        if ($method == 'delete') {
+            return true;
+        }
+
+        return parent::authenticate($request);
+    }
+
+    protected function handleDelete(WebRequest $request, Response $response)
+    {
+        //  Extract Token from URL
+        $urlParts = explode('/', $request->urlPath);
+        $urlParts = array_values(array_filter($urlParts, function ($value) {
+            return !empty($value);
+        }));
+        $this->urlToken = $urlParts[count($urlParts) - 1];
+
+        return parent::handleDelete($request, $response);
     }
 }

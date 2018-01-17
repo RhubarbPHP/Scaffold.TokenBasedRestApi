@@ -18,15 +18,19 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Resources;
 
+use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Crown\Exceptions\ForceResponseException;
 use Rhubarb\Crown\Response\NotAuthorisedResponse;
 use Rhubarb\RestApi\Resources\RestResource;
 use Rhubarb\RestApi\UrlHandlers\RestHandler;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Model\ApiToken;
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
+use Rhubarb\Stem\Filters\Equals;
 
 class TokenResource extends RestResource
 {
     protected $loginProvider = "";
+    public $tokenToDelete = "";
 
     public function __construct($loginProvider)
     {
@@ -58,5 +62,20 @@ class TokenResource extends RestResource
         $response->expires = $token->Expires;
 
         return $response;
+    }
+
+    public function delete()
+    {
+        if (empty($this->tokenToDelete)) {
+            parent::delete();
+        }
+
+        try {
+            $apiToken = ApiToken::findFirst(new Equals('Token', $this->tokenToDelete));
+            $apiToken->Expires = new RhubarbDateTime('-10 seconds');
+            $apiToken->save();
+        } catch (RecordNotFoundException $ex) {
+        }
+
     }
 }

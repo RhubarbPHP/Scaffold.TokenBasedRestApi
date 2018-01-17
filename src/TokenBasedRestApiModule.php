@@ -20,6 +20,8 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi;
 
 use Rhubarb\Crown\Module;
 use Rhubarb\RestApi\Authentication\AuthenticationProvider;
+use Rhubarb\RestApi\UrlHandlers\RestResourceHandler;
+use Rhubarb\Scaffolds\TokenBasedRestApi\Resources\DeleteTokenResource;
 use Rhubarb\Scaffolds\TokenBasedRestApi\UrlHandlers\TokenCreationUrlHandler;
 use Rhubarb\Stem\Schema\SolutionSchema;
 
@@ -66,15 +68,15 @@ class TokenBasedRestApiModule extends Module
 
         AuthenticationProvider::setProviderClassName($this->tokenAuthenticationProviderClassName);
 
-        $tokenHandler = new TokenCreationUrlHandler($this->loginProviderAuthenticationProviderClassName, [],
-            $this->tokenResourceClassName);
+        $tokenHandler = new TokenCreationUrlHandler($this->loginProviderAuthenticationProviderClassName, [
+            ], $this->tokenResourceClassName);
         $tokenHandler->setName("tokens");
         $tokenHandler->setPriority(1000);
 
         // Register the url that serves up the tokens.
         $this->addUrlHandlers(
             [
-                $this->apiStubUrl . "tokens" => $tokenHandler
+                $this->apiStubUrl . "tokens" => $tokenHandler,
             ]);
     }
 }
