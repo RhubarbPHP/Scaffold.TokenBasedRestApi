@@ -26,7 +26,7 @@ use Rhubarb\RestApi\UrlHandlers\RestResourceHandler;
 class TokenCreationUrlHandler extends RestResourceHandler
 {
     private $authenticationProviderClassName;
-    private $urlToken;
+    private $urlTokenToDelete;
 
     public function __construct(
         $authenticationProviderClassName,
@@ -48,13 +48,8 @@ class TokenCreationUrlHandler extends RestResourceHandler
         $className = $this->apiResourceClassName;
         $authenticationProvider = $this->createAuthenticationProvider();
         $loginProvider = $authenticationProvider->getLoginProvider();
-        $resource = new $className($loginProvider);
 
-        if (!empty($this->urlToken)) {
-            if (property_exists($resource, 'tokenToDelete')) {
-                $resource->tokenToDelete = $this->urlToken;
-            }
-        }
+        $resource = new $className($loginProvider, $this->urlTokenToDelete);
 
         return $resource;
     }
@@ -83,7 +78,7 @@ class TokenCreationUrlHandler extends RestResourceHandler
         $urlParts = array_values(array_filter($urlParts, function ($value) {
             return !empty($value);
         }));
-        $this->urlToken = $urlParts[count($urlParts) - 1];
+        $this->urlTokenToDelete = $urlParts[count($urlParts) - 1];
 
         return parent::handleDelete($request, $response);
     }

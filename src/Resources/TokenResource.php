@@ -30,13 +30,14 @@ use Rhubarb\Stem\Filters\Equals;
 class TokenResource extends RestResource
 {
     protected $loginProvider = "";
-    public $tokenToDelete = "";
+    protected $tokenToDelete = "";
 
-    public function __construct($loginProvider)
+    public function __construct($loginProvider, $tokenToDelete = '')
     {
         parent::__construct();
 
         $this->loginProvider = $loginProvider;
+        $this->tokenToDelete = $tokenToDelete;
     }
 
     public function validateRequestPayload($payload, $method)
@@ -77,5 +78,9 @@ class TokenResource extends RestResource
         } catch (RecordNotFoundException $ex) {
         }
 
+        $response = new \stdClass();
+        $response->status = true;
+
+        return $response;
     }
 }
