@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.0.3
+
+* Added:    Added logic to be able to expire a Token
+
 ### 2.0.2
 
 * Fixed:    Fixed issue with Incorrect LoginProvider being used
