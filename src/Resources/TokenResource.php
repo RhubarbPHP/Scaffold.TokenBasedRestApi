@@ -18,21 +18,26 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Resources;
 
+use Rhubarb\Crown\DateTime\RhubarbDateTime;
 use Rhubarb\Crown\Exceptions\ForceResponseException;
 use Rhubarb\Crown\Response\NotAuthorisedResponse;
 use Rhubarb\RestApi\Resources\RestResource;
 use Rhubarb\RestApi\UrlHandlers\RestHandler;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Model\ApiToken;
+use Rhubarb\Stem\Exceptions\RecordNotFoundException;
+use Rhubarb\Stem\Filters\Equals;
 
 class TokenResource extends RestResource
 {
     protected $loginProvider = "";
+    protected $tokenToDelete = "";
 
-    public function __construct($loginProvider)
+    public function __construct($loginProvider, $tokenToDelete = '')
     {
         parent::__construct();
 
         $this->loginProvider = $loginProvider;
+        $this->tokenToDelete = $tokenToDelete;
     }
 
     public function validateRequestPayload($payload, $method)
@@ -56,6 +61,25 @@ class TokenResource extends RestResource
         $response = new \stdClass();
         $response->token = $token->Token;
         $response->expires = $token->Expires;
+
+        return $response;
+    }
+
+    public function delete()
+    {
+        if (empty($this->tokenToDelete)) {
+            parent::delete();
+        }
+
+        try {
+            $apiToken = ApiToken::findFirst(new Equals('Token', $this->tokenToDelete));
+            $apiToken->Expires = new RhubarbDateTime('-10 seconds');
+            $apiToken->save();
+        } catch (RecordNotFoundException $ex) {
+        }
+
+        $response = new \stdClass();
+        $response->status = true;
 
         return $response;
     }
