@@ -20,6 +20,7 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedA
 
 use Rhubarb\Crown\Exceptions\ForceResponseException;
 use Rhubarb\Crown\LoginProviders\Exceptions\LoginFailedException;
+use Rhubarb\Crown\LoginProviders\LoginProvider;
 use Rhubarb\Crown\Request\Request;
 use Rhubarb\Crown\Response\BasicAuthorisationRequiredResponse;
 use Rhubarb\Crown\Response\ExpiredResponse;
@@ -27,7 +28,6 @@ use Rhubarb\Crown\Response\TooManyLoginAttemptsResponse;
 use Rhubarb\RestApi\Authentication\CredentialsLoginProviderAuthenticationProvider;
 use Rhubarb\Scaffolds\Authentication\Exceptions\LoginExpiredException;
 use Rhubarb\Scaffolds\Authentication\Exceptions\LoginTemporarilyLockedOutException;
-use Rhubarb\Scaffolds\Authentication\LoginProviders\LoginProvider;
 
 
 class LoginProviderCredentialsAuthenticationProvider extends CredentialsLoginProviderAuthenticationProvider
