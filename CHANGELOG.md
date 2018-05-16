@@ -1,5 +1,9 @@
 # Change Log
 
+### 2.0.4
+
+* Fixed:    Reverting previous change on LoginProvider as the previous change prevented dependency injection from being used 
+
 ### 2.0.3
 
 * Added:    Added logic to be able to expire a Token
