@@ -16,17 +16,16 @@
  *  limitations under the License.
  */
 
-namespace Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\LoginProviderBasedAuthenticationProviders;
+namespace Rhubarb\Scaffolds\TokenBasedRestApi\Responses;
 
-use Rhubarb\Crown\LoginProviders\LoginProvider;
-use Rhubarb\Scaffolds\TokenBasedRestApi\Authentication\TokenAuthenticationProvider;
-use Rhubarb\Stem\Models\Model;
+use Rhubarb\Crown\Response\NotAuthorisedResponse;
 
-class LoginProviderTokenAuthenticationProvider extends TokenAuthenticationProvider
+class TokenAuthorisationRequiredResponse extends NotAuthorisedResponse
 {
-    protected function logUserIn(Model $user)
+    public function __construct($generator = null)
     {
-        $loginProvider = LoginProvider::getProvider();
-        $loginProvider->forceLogin($user);
+        parent::__construct($generator);
+
+        $this->setHeader("WWW-authenticate", "Token \"API\"");
     }
 }

@@ -27,16 +27,14 @@ class TokenBasedRestApiSolutionSchema extends SolutionSchema
     {
         parent::__construct($version);
 
-        $this->addModel("ApiToken", "\Rhubarb\Scaffolds\TokenBasedRestApi\Model\ApiToken");
+        $this->addModel("ApiToken", ApiToken::class);
     }
 
     protected function defineRelationships()
     {
-        $userModelName = TokenBasedRestApiModule::getAuthenticationUserModelName();
-
         $this->declareOneToManyRelationships(
             [
-                $userModelName =>
+                'User' =>
                     [
                         "AuthenticationTokens" => "ApiToken.AuthenticatedUserID:AuthenticatedUser"
                     ]

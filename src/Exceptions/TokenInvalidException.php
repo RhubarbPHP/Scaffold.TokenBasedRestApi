@@ -18,9 +18,9 @@
 
 namespace Rhubarb\Scaffolds\TokenBasedRestApi\Exceptions;
 
-use Rhubarb\RestApi\Exceptions\RestImplementationException;
+use Rhubarb\Crown\Exceptions\RhubarbException;
 
-class TokenInvalidException extends RestImplementationException
+class TokenInvalidException extends RhubarbException
 {
 
 } 
