@@ -45,11 +45,11 @@ class TokenAuthenticationMiddleware extends Middleware
 
         $authString = trim($request->header("Authorization"));
 
-        if (stripos($authString, "token") !== 0) {
+        if (stripos($authString, "token") !== 0 && stripos($authString, "bearer") !== 0) {
             return new TokenAuthorisationRequiredResponse();
         }
 
-        if (!preg_match("/token=\"?([[:alnum:]]+)\"?/", $authString, $match)) {
+        if (!preg_match("/(token|bearer)=?\"?([[:alnum:]]+)\"?/", $authString, $match)) {
             return new TokenAuthorisationRequiredResponse();
         }
 
