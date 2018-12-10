@@ -36,7 +36,7 @@ class TokenAuthenticationMiddleware extends Middleware
         $loginProvider->forceLogin($user);
     }
 
-    public function handleRequest(WebRequest $request, callable $next): ?Response
+    public function handleRequest($params, WebRequest $request, callable $next): ?Response
     {
         if (!$request->header("Authorization")) {
             Log::debug("Authorization header missing. If using fcgi be sure to instruct Apache to include this header", "RESTAPI");

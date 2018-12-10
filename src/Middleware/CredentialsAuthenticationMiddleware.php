@@ -101,7 +101,7 @@ class CredentialsAuthenticationMiddleware extends Middleware
      * @param callable $next
      * @return null|Response
      */
-    public function handleRequest(WebRequest $request, callable $next): ?Response
+    public function handleRequest($params, WebRequest $request, callable $next): ?Response
     {
         try {
             $this->authenticate($request);
