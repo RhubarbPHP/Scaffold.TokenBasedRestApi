@@ -59,6 +59,10 @@ class TokenAuthenticationMiddleware extends Middleware
             return new TokenAuthorisationRequiredResponse();
         }
 
+        if($next) {
+            return $next();
+        }
+
         return null;
     }
 
