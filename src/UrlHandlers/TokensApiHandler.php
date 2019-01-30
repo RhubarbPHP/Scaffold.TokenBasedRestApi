@@ -21,8 +21,8 @@ class TokensApiHandler extends RestApiHandler
             return (new TokenResourceAdapter())->post($request->getPayload(), $params, $request);
         })->with(new CredentialsAuthenticationMiddleware());
 
-        $this->post("/token/revoke", function($params, WebRequest $request){
-            return (new RevokeTokenResourceAdapter())->post($request->getPayload(), $params, $request);
+        $this->delete("/token", function($params, WebRequest $request){
+            return (new TokenResourceAdapter())->delete($request->getPayload(), $params, $request);
         })->with(new TokenAuthenticationMiddleware());
 
         $this->get("/me", function($params, WebRequest $request){
