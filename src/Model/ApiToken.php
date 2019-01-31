@@ -27,9 +27,11 @@ use Rhubarb\Stem\Filters\GreaterThan;
 use Rhubarb\Stem\Models\Model;
 use Rhubarb\Stem\Models\Validation\HasValue;
 use Rhubarb\Stem\Models\Validation\Validator;
+use Rhubarb\Stem\Repositories\MySql\Schema\MySqlIndex;
 use Rhubarb\Stem\Schema\Columns\AutoIncrementColumn;
 use Rhubarb\Stem\Schema\Columns\DateTimeColumn;
 use Rhubarb\Stem\Schema\Columns\ForeignKeyColumn;
+use Rhubarb\Stem\Schema\Columns\IntegerColumn;
 use Rhubarb\Stem\Schema\Columns\StringColumn;
 use Rhubarb\Stem\Schema\Index;
 use Rhubarb\Stem\Schema\ModelSchema;
@@ -44,8 +46,7 @@ class ApiToken extends Model
         $schema = new ModelSchema("tblApiToken");
 
         $schema->addColumn(
-            new AutoIncrementColumn("ApiTokenID"),
-            new ForeignKeyColumn("AuthenticatedUserID"),
+            new IntegerColumn("UserID", 0),
             new StringColumn("Token", 100),
             new StringColumn("IpAddress", 20),
             new DateTimeColumn("Expires")
@@ -53,7 +54,8 @@ class ApiToken extends Model
 
         $schema->labelColumnName = "Token";
 
-        $schema->addIndex(new Index("Token", Index::INDEX));
+        $schema->addIndex(new MySqlIndex("UserID", MySqlIndex::PRIMARY));
+        $schema->uniqueIdentifierColumnName = "UserID";
 
         return $schema;
     }

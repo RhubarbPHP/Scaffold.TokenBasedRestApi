@@ -32,11 +32,11 @@ class TokenBasedRestApiSolutionSchema extends SolutionSchema
 
     protected function defineRelationships()
     {
-        $this->declareOneToManyRelationships(
+        $this->declareOneToOneRelationships(
             [
-                'User' =>
+                'ApiToken' =>
                     [
-                        "AuthenticationTokens" => "ApiToken.AuthenticatedUserID:AuthenticatedUser"
+                        "User" => "ApiToken.UserID"
                     ]
             ]);
 
