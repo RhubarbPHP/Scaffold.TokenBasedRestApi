@@ -21,6 +21,7 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi;
 use Firebase\JWT\JWT;
 use Psr\Http\Message\ServerRequestInterface;
 use Rhubarb\Crown\LoginProviders\LoginProvider;
+use Rhubarb\RestApi\Exceptions\MethodNotAllowedException;
 use Rhubarb\RestApi\RhubarbApiModule;
 use Slim\App;
 use Slim\Http\Request;
@@ -41,7 +42,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     private $algorithm;
 
-    public function __construct(string $secret, $ignore = ['*/token'], string $algorithm = 'HS512')
+    public function __construct(string $secret, $ignore = ['.*/token'], string $algorithm = 'HS512')
     {
         $this->secret = $secret;
         $this->ignore = $ignore;
@@ -50,18 +51,23 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     protected function validatePayload($decoded)
     {
-        if ($decoded->expiry > (new \DateTime())->getTimestamp()) {
-            throw new
+        if ($decoded['expires'] < (new \DateTime())->getTimestamp()) {
+            throw new \Exception('bad!', 401);
         }
     }
 
     protected function authenticate(Request $request): bool
     {
-        list($user, $password) = explode(':', base64_decode($request->getHeader('Authorization')), 2);
-        /** @var LoginProvider $login */
-        $login = LoginProvider::getProvider();
-        //ToDo: attempt login. however that's done.
-        return true;
+        $authHeader = $request->getHeader('Authorization')[0];
+        list($user, $password) = explode(':', base64_decode(str_replace('Basic ', '', $authHeader)), 2);
+        try {
+            /** @var LoginProvider $login */
+            $login = LoginProvider::getProvider();
+            $login->login($user, $password);
+            return true;
+        } catch (\Exception $exception) {
+            return false;
+        }
     }
 
     public function registerErrorHandlers(App $app)
@@ -71,11 +77,12 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     protected function createJWTMiddleWare(): JwtAuthentication
     {
+        $self = $this;
         return new JwtAuthentication([
             'secret' => $this->secret,
             'ignore' => $this->ignore,
-            'before' => function (ServerRequestInterface $request, $arguments) {
-                $this->validatePayload($arguments['decoded']);
+            'before' => function (ServerRequestInterface $request, $arguments) use ($self) {
+                $self->validatePayload($arguments['decoded']);
             },
         ]);
     }
@@ -87,20 +94,29 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     public function registerRoutes(App $app)
     {
-        $app->post('/token', function (Request $request, Response $response) {
-            if ($this->authenticate($request)) {
+        $self = $this;
+
+        $app->any('/token', function (Request $request, Response $response) use ($self) {
+            if ($request->getMethod() !== 'POST') {
+                throw new MethodNotAllowedException();
+            }
+            if ($self->authenticate($request)) {
                 $expiry = new \DateTime();
                 $expiry->add(new\DateInterval('P1D'));
-                return $response->write(JWT::encode(
-                    ['expires' => $expiry->getTimestamp()],
-                    $this->secret,
-                    $this->algorithm
-                ))->withStatus(201, 'Created');
+                return $response
+                    ->write(JWT::encode(
+                        ['expires' => $expiry->getTimestamp()],
+                        $self->secret,
+                        $self->algorithm
+                    ))
+                    ->withStatus(201, 'Created');
             } else {
-                $response->withStatus(401, 'Access Denied');
+                return $response
+                    ->withAddedHeader('WWW_Authenticate', 'Basic')
+                    ->withStatus(401, 'Access Denied');
             }
         });
-        $app->get('/me', function(Request $request, Response $response) {
+        $app->get('/me', function (Request $request, Response $response) {
             return $response->withJson(['hello' => 'world']);
         });
     }
