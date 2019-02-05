@@ -1,10 +1,10 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "db1d4425814a7494096241475a49dfc5",
+    "content-hash": "910b80ca5a8346440c98cebb10c13480",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -484,17 +484,222 @@
             "time": "2018-11-20T15:27:04+00:00"
         },
         {
+            "name": "rhubarbphp/custard",
+            "version": "1.0.12",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Custard.git",
+                "reference": "4ff25a203521f06132503b94bb305d9a1ae528e5"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Custard/zipball/4ff25a203521f06132503b94bb305d9a1ae528e5",
+                "reference": "4ff25a203521f06132503b94bb305d9a1ae528e5",
+                "shasum": ""
+            },
+            "require": {
+                "symfony/console": ">=2.7.5"
+            },
+            "bin": [
+                "bin/custard",
+                "bin/vcustard"
+            ],
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Custard\\": "src/",
+                    "Rhubarb\\Custard\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Provides command line tools for Rhubarb projects.",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "cli",
+                "command-line",
+                "custard",
+                "framework",
+                "php",
+                "rhubarb",
+                "tools"
+            ],
+            "time": "2019-02-05T11:10:34+00:00"
+        },
+        {
+            "name": "rhubarbphp/module-csrfprotection",
+            "version": "1.0.5",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Module.CsrfProtection.git",
+                "reference": "3472b0cce4137b33e205183c19530b07f5a17a0d"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.CsrfProtection/zipball/3472b0cce4137b33e205183c19530b07f5a17a0d",
+                "reference": "3472b0cce4137b33e205183c19530b07f5a17a0d",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/rhubarb": "^1.5.6"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.0.0",
+                "codeception/specify": "^0.4.6",
+                "codeception/verify": "^0.4.0"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Csrf\\": "src/",
+                    "Rhubarb\\Csrf\\Tests\\": "tests/unit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A means to provide token based CSRF protection",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "csrf",
+                "framework",
+                "php",
+                "protection",
+                "rhubarb",
+                "token"
+            ],
+            "time": "2018-01-15T21:02:22+00:00"
+        },
+        {
+            "name": "rhubarbphp/module-jsvalidation",
+            "version": "1.1.6",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Module.JsValidation.git",
+                "reference": "ad385c9c712c5e4ebdd35bd593cff06785b5dd3b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.JsValidation/zipball/ad385c9c712c5e4ebdd35bd593cff06785b5dd3b",
+                "reference": "ad385c9c712c5e4ebdd35bd593cff06785b5dd3b",
+                "shasum": ""
+            },
+            "type": "library",
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache 2.0"
+            ],
+            "description": "Provides javascript validation patterns for HTML forms",
+            "time": "2019-01-24T09:03:57+00:00"
+        },
+        {
+            "name": "rhubarbphp/module-leaf",
+            "version": "1.4.9",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Module.Leaf.git",
+                "reference": "0de7447b87ccbe483ead967d3efa02c362f8a9a7"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.Leaf/zipball/0de7447b87ccbe483ead967d3efa02c362f8a9a7",
+                "reference": "0de7447b87ccbe483ead967d3efa02c362f8a9a7",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/custard": "^1.0.9",
+                "rhubarbphp/module-csrfprotection": "^1.0.5",
+                "rhubarbphp/module-jsvalidation": "^1.0.0",
+                "rhubarbphp/rhubarb": "^1.1.0"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.0.0",
+                "pdepend/pdepend": "^2.0.0",
+                "phploc/phploc": "^3.0.0",
+                "phpmd/phpmd": "^2.0.0",
+                "rhubarbphp/module-build-status-updater": "^1.0.5",
+                "sebastian/phpcpd": "^2.0.0",
+                "squizlabs/php_codesniffer": "^2.0.0",
+                "tan-tan-kanarek/github-php-client": "^1.0.0",
+                "theseer/phpdox": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Leaf\\": "src/",
+                    "Rhubarb\\Leaf\\Tests\\": "tests/unit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A nestable user interface building module for the Rhubarb PHP framework based upon the model-view-presenter pattern.",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "framework",
+                "leaf",
+                "mvp",
+                "php",
+                "presenter",
+                "rhubarb"
+            ],
+            "time": "2019-01-04T11:18:59+00:00"
+        },
+        {
+            "name": "rhubarbphp/module-leaf-common-controls",
+            "version": "1.1.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Module.Leaf.CommonControls.git",
+                "reference": "fd12390c470304a436ebd78f315e29af7552cc15"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.Leaf.CommonControls/zipball/fd12390c470304a436ebd78f315e29af7552cc15",
+                "reference": "fd12390c470304a436ebd78f315e29af7552cc15",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/module-leaf": "^1.1.2"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Leaf\\Controls\\Common\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Common form control leaves for the leaf module of Rhubarb",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "framework",
+                "leaf",
+                "mvp",
+                "php",
+                "presenter",
+                "rhubarb"
+            ],
+            "time": "2018-10-23T22:11:27+00:00"
+        },
+        {
             "name": "rhubarbphp/module-restapi",
             "version": "v3.x-dev",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RhubarbPHP/Module.RestApi.git",
-                "reference": "1bcaecaa642cfbea5a323cc0745c11abd0c93eaa"
+                "reference": "f4d039b34c2cd6d11b7093a1337a0f0075170f29"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/1bcaecaa642cfbea5a323cc0745c11abd0c93eaa",
-                "reference": "1bcaecaa642cfbea5a323cc0745c11abd0c93eaa",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/f4d039b34c2cd6d11b7093a1337a0f0075170f29",
+                "reference": "f4d039b34c2cd6d11b7093a1337a0f0075170f29",
                 "shasum": ""
             },
             "require": {
@@ -515,7 +720,59 @@
                 "Apache-2.0"
             ],
             "description": "An module for building ReSTful API services",
-            "time": "2019-02-04T14:16:26+00:00"
+            "time": "2019-02-05T09:12:42+00:00"
+        },
+        {
+            "name": "rhubarbphp/module-stem",
+            "version": "1.8.1",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Module.Stem.git",
+                "reference": "a17dab06a636f73e2b77798247c12c14b7c53c36"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.Stem/zipball/a17dab06a636f73e2b77798247c12c14b7c53c36",
+                "reference": "a17dab06a636f73e2b77798247c12c14b7c53c36",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/rhubarb": "^1.5.2"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.1.8",
+                "pdepend/pdepend": "^2.0.0",
+                "phploc/phploc": "^3.0.0",
+                "phpmd/phpmd": "^2.0.0",
+                "rhubarbphp/custard": "^1.0.0",
+                "rhubarbphp/module-build-status-updater": "^1.0.4",
+                "sebastian/phpcpd": "^2.0.0",
+                "squizlabs/php_codesniffer": "^2.0.0",
+                "tan-tan-kanarek/github-php-client": "^1.0.0",
+                "theseer/phpdox": "*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Stem\\": "src/",
+                    "Rhubarb\\Stem\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "A data modelling and ORM module for the Rhubarb PHP framework",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "Modelling",
+                "data",
+                "framework",
+                "model",
+                "orm",
+                "php"
+            ],
+            "time": "2019-01-23T22:31:16+00:00"
         },
         {
             "name": "rhubarbphp/rhubarb",
@@ -564,6 +821,94 @@
                 "php"
             ],
             "time": "2018-10-22T16:18:02+00:00"
+        },
+        {
+            "name": "rhubarbphp/scaffold-authentication",
+            "version": "1.3.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Scaffold.Authentication.git",
+                "reference": "b0d420a4df8714a4c2ac20582a72ede2711903dc"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Scaffold.Authentication/zipball/b0d420a4df8714a4c2ac20582a72ede2711903dc",
+                "reference": "b0d420a4df8714a4c2ac20582a72ede2711903dc",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/module-leaf": "*",
+                "rhubarbphp/module-leaf-common-controls": "*",
+                "rhubarbphp/module-stem": "^1.5.1",
+                "rhubarbphp/rhubarb": "^1.4.3"
+            },
+            "require-dev": {
+                "codeception/codeception": "^2.4"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Scaffolds\\Authentication\\": "src/",
+                    "Rhubarb\\Scaffolds\\Authentication\\Tests\\": "tests/unit/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Provides some an out of the box solution for login and authentication.",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "Authentication",
+                "framework",
+                "php",
+                "rhubarb"
+            ],
+            "time": "2018-11-28T23:47:43+00:00"
+        },
+        {
+            "name": "rhubarbphp/scaffold-authentication-with-roles",
+            "version": "1.2.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/RhubarbPHP/Scaffold.AuthenticationWithRoles.git",
+                "reference": "7402e741b67f1936dfbb3d3ae6e1f6193c226f9b"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/RhubarbPHP/Scaffold.AuthenticationWithRoles/zipball/7402e741b67f1936dfbb3d3ae6e1f6193c226f9b",
+                "reference": "7402e741b67f1936dfbb3d3ae6e1f6193c226f9b",
+                "shasum": ""
+            },
+            "require": {
+                "rhubarbphp/custard": "^1.0",
+                "rhubarbphp/module-stem": "^1.2",
+                "rhubarbphp/rhubarb": "^1.1",
+                "rhubarbphp/scaffold-authentication": ">0.99"
+            },
+            "require-dev": {
+                "codeception/codeception": "2.1.*"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Rhubarb\\Scaffolds\\AuthenticationWithRoles\\": "src/",
+                    "Rhubarb\\Scaffolds\\AuthenticationWithRoles\\Tests\\": "tests/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "Apache-2.0"
+            ],
+            "description": "Extends the basic authentication scaffold with groups and role based permissions.",
+            "homepage": "http://www.rhubarbphp.com/",
+            "keywords": [
+                "Authentication",
+                "framework",
+                "php",
+                "rhubarb"
+            ],
+            "time": "2017-11-17T09:38:31+00:00"
         },
         {
             "name": "slim/slim",
@@ -635,6 +980,205 @@
                 "router"
             ],
             "time": "2019-01-15T13:21:25+00:00"
+        },
+        {
+            "name": "symfony/console",
+            "version": "v4.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/console.git",
+                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/console/zipball/1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
+                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3",
+                "symfony/contracts": "^1.0",
+                "symfony/polyfill-mbstring": "~1.0"
+            },
+            "conflict": {
+                "symfony/dependency-injection": "<3.4",
+                "symfony/process": "<3.3"
+            },
+            "provide": {
+                "psr/log-implementation": "1.0"
+            },
+            "require-dev": {
+                "psr/log": "~1.0",
+                "symfony/config": "~3.4|~4.0",
+                "symfony/dependency-injection": "~3.4|~4.0",
+                "symfony/event-dispatcher": "~3.4|~4.0",
+                "symfony/lock": "~3.4|~4.0",
+                "symfony/process": "~3.4|~4.0"
+            },
+            "suggest": {
+                "psr/log": "For using the console logger",
+                "symfony/event-dispatcher": "",
+                "symfony/lock": "",
+                "symfony/process": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "4.2-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Component\\Console\\": ""
+                },
+                "exclude-from-classmap": [
+                    "/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony Console Component",
+            "homepage": "https://symfony.com",
+            "time": "2019-01-25T14:35:16+00:00"
+        },
+        {
+            "name": "symfony/contracts",
+            "version": "v1.0.2",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/contracts.git",
+                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.1.3"
+            },
+            "require-dev": {
+                "psr/cache": "^1.0",
+                "psr/container": "^1.0"
+            },
+            "suggest": {
+                "psr/cache": "When using the Cache contracts",
+                "psr/container": "When using the Service contracts",
+                "symfony/cache-contracts-implementation": "",
+                "symfony/service-contracts-implementation": "",
+                "symfony/translation-contracts-implementation": ""
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Contracts\\": ""
+                },
+                "exclude-from-classmap": [
+                    "**/Tests/"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "A set of abstractions extracted out of the Symfony components",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "abstractions",
+                "contracts",
+                "decoupling",
+                "interfaces",
+                "interoperability",
+                "standards"
+            ],
+            "time": "2018-12-05T08:06:11+00:00"
+        },
+        {
+            "name": "symfony/polyfill-mbstring",
+            "version": "v1.10.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/polyfill-mbstring.git",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
+                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "suggest": {
+                "ext-mbstring": "For best performance"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.9-dev"
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "Symfony\\Polyfill\\Mbstring\\": ""
+                },
+                "files": [
+                    "bootstrap.php"
+                ]
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Nicolas Grekas",
+                    "email": "p@tchwork.com"
+                },
+                {
+                    "name": "Symfony Community",
+                    "homepage": "https://symfony.com/contributors"
+                }
+            ],
+            "description": "Symfony polyfill for the Mbstring extension",
+            "homepage": "https://symfony.com",
+            "keywords": [
+                "compatibility",
+                "mbstring",
+                "polyfill",
+                "portable",
+                "shim"
+            ],
+            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "tuupola/callable-handler",
@@ -2400,146 +2944,6 @@
             "time": "2019-01-16T21:31:25+00:00"
         },
         {
-            "name": "symfony/console",
-            "version": "v4.2.3",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/console.git",
-                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/console/zipball/1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
-                "reference": "1f0ad51dfde4da8a6070f06adc58b4e37cbb37a4",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3",
-                "symfony/contracts": "^1.0",
-                "symfony/polyfill-mbstring": "~1.0"
-            },
-            "conflict": {
-                "symfony/dependency-injection": "<3.4",
-                "symfony/process": "<3.3"
-            },
-            "provide": {
-                "psr/log-implementation": "1.0"
-            },
-            "require-dev": {
-                "psr/log": "~1.0",
-                "symfony/config": "~3.4|~4.0",
-                "symfony/dependency-injection": "~3.4|~4.0",
-                "symfony/event-dispatcher": "~3.4|~4.0",
-                "symfony/lock": "~3.4|~4.0",
-                "symfony/process": "~3.4|~4.0"
-            },
-            "suggest": {
-                "psr/log": "For using the console logger",
-                "symfony/event-dispatcher": "",
-                "symfony/lock": "",
-                "symfony/process": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "4.2-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Component\\Console\\": ""
-                },
-                "exclude-from-classmap": [
-                    "/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Fabien Potencier",
-                    "email": "fabien@symfony.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony Console Component",
-            "homepage": "https://symfony.com",
-            "time": "2019-01-25T14:35:16+00:00"
-        },
-        {
-            "name": "symfony/contracts",
-            "version": "v1.0.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/contracts.git",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/contracts/zipball/1aa7ab2429c3d594dd70689604b5cf7421254cdf",
-                "reference": "1aa7ab2429c3d594dd70689604b5cf7421254cdf",
-                "shasum": ""
-            },
-            "require": {
-                "php": "^7.1.3"
-            },
-            "require-dev": {
-                "psr/cache": "^1.0",
-                "psr/container": "^1.0"
-            },
-            "suggest": {
-                "psr/cache": "When using the Cache contracts",
-                "psr/container": "When using the Service contracts",
-                "symfony/cache-contracts-implementation": "",
-                "symfony/service-contracts-implementation": "",
-                "symfony/translation-contracts-implementation": ""
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.0-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Contracts\\": ""
-                },
-                "exclude-from-classmap": [
-                    "**/Tests/"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "A set of abstractions extracted out of the Symfony components",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "abstractions",
-                "contracts",
-                "decoupling",
-                "interfaces",
-                "interoperability",
-                "standards"
-            ],
-            "time": "2018-12-05T08:06:11+00:00"
-        },
-        {
             "name": "symfony/css-selector",
             "version": "v4.2.3",
             "source": {
@@ -2819,65 +3223,6 @@
                 "portable"
             ],
             "time": "2018-08-06T14:22:27+00:00"
-        },
-        {
-            "name": "symfony/polyfill-mbstring",
-            "version": "v1.10.0",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/symfony/polyfill-mbstring.git",
-                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/symfony/polyfill-mbstring/zipball/c79c051f5b3a46be09205c73b80b346e4153e494",
-                "reference": "c79c051f5b3a46be09205c73b80b346e4153e494",
-                "shasum": ""
-            },
-            "require": {
-                "php": ">=5.3.3"
-            },
-            "suggest": {
-                "ext-mbstring": "For best performance"
-            },
-            "type": "library",
-            "extra": {
-                "branch-alias": {
-                    "dev-master": "1.9-dev"
-                }
-            },
-            "autoload": {
-                "psr-4": {
-                    "Symfony\\Polyfill\\Mbstring\\": ""
-                },
-                "files": [
-                    "bootstrap.php"
-                ]
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "MIT"
-            ],
-            "authors": [
-                {
-                    "name": "Nicolas Grekas",
-                    "email": "p@tchwork.com"
-                },
-                {
-                    "name": "Symfony Community",
-                    "homepage": "https://symfony.com/contributors"
-                }
-            ],
-            "description": "Symfony polyfill for the Mbstring extension",
-            "homepage": "https://symfony.com",
-            "keywords": [
-                "compatibility",
-                "mbstring",
-                "polyfill",
-                "portable",
-                "shim"
-            ],
-            "time": "2018-09-21T13:07:52+00:00"
         },
         {
             "name": "symfony/process",

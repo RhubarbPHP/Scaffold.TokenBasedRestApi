@@ -20,9 +20,12 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi;
 
 use Firebase\JWT\JWT;
 use Psr\Http\Message\ServerRequestInterface;
+use Rhubarb\Crown\DependencyInjection\Container;
 use Rhubarb\Crown\LoginProviders\LoginProvider;
 use Rhubarb\RestApi\Exceptions\MethodNotAllowedException;
 use Rhubarb\RestApi\RhubarbApiModule;
+use Rhubarb\Scaffolds\AuthenticationWithRoles\User;
+use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\UserEntityAdapter;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -47,13 +50,21 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $this->secret = $secret;
         $this->ignore = $ignore;
         $this->algorithm = $algorithm;
+
+        Container::current()->registerClass(UserEntityAdapter::class, DefaultUserEntityAdapter::class);
     }
 
     protected function validatePayload($decoded)
     {
         if ($decoded['expires'] < (new \DateTime())->getTimestamp()) {
-            throw new \Exception('bad!', 401);
+            throw new \Exception('Session Expired', 401);
         }
+        if (!$decoded['user']) {
+            throw new \Exception('Invalid Token', 401);
+        }
+        /** @var LoginProvider $login */
+        $login = LoginProvider::getProvider();
+        $login->forceLogin(new User($decoded['user']));
     }
 
     protected function authenticate(Request $request): bool
@@ -100,12 +111,15 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             if ($request->getMethod() !== 'POST') {
                 throw new MethodNotAllowedException();
             }
-            if ($self->authenticate($request)) {
+            if ($user = $self->authenticate($request)) {
                 $expiry = new \DateTime();
                 $expiry->add(new\DateInterval('P1D'));
                 return $response
                     ->write(JWT::encode(
-                        ['expires' => $expiry->getTimestamp()],
+                        [
+                            'expires' => $expiry->getTimestamp(),
+                            'user' => $user->getUniqueIdentifier(),
+                        ],
                         $self->secret,
                         $self->algorithm
                     ))
@@ -117,7 +131,9 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             }
         });
         $app->get('/me', function (Request $request, Response $response) {
-            return $response->withJson(['hello' => 'world']);
+            /** @var LoginProvider $login */
+            $login = LoginProvider::getProvider();
+            return UserEntityAdapter::get($login->loggedInUserIdentifier, $request, $response);
         });
     }
 }
