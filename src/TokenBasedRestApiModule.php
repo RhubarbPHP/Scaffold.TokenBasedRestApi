@@ -24,7 +24,8 @@ use Rhubarb\Crown\DependencyInjection\Container;
 use Rhubarb\Crown\LoginProviders\LoginProvider;
 use Rhubarb\RestApi\Exceptions\MethodNotAllowedException;
 use Rhubarb\RestApi\RhubarbApiModule;
-use Rhubarb\Scaffolds\AuthenticationWithRoles\User;
+use Rhubarb\Scaffolds\Authentication\User;
+use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\DefaultUserEntityAdapter;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\UserEntityAdapter;
 use Slim\App;
 use Slim\Http\Request;
@@ -45,7 +46,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     private $algorithm;
 
-    public function __construct(string $secret, $ignore = ['.*/token'], string $algorithm = 'HS512')
+    public function __construct(string $secret, $ignore = ['/token'], string $algorithm = 'HS512')
     {
         $this->secret = $secret;
         $this->ignore = $ignore;
@@ -67,7 +68,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $login->forceLogin(new User($decoded['user']));
     }
 
-    protected function authenticate(Request $request): bool
+    protected function authenticate(Request $request)
     {
         $authHeader = $request->getHeader('Authorization')[0];
         list($user, $password) = explode(':', base64_decode(str_replace('Basic ', '', $authHeader)), 2);
@@ -75,7 +76,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
             $login->login($user, $password);
-            return true;
+            return $login->loggedInUserIdentifier;
         } catch (\Exception $exception) {
             return false;
         }
@@ -118,7 +119,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
                     ->write(JWT::encode(
                         [
                             'expires' => $expiry->getTimestamp(),
-                            'user' => $user->getUniqueIdentifier(),
+                            'user' => $user,
                         ],
                         $self->secret,
                         $self->algorithm

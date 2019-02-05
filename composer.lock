@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "910b80ca5a8346440c98cebb10c13480",
+    "content-hash": "69db9cf7d77a96acaa910c4c6ea5ed09",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -865,50 +865,6 @@
                 "rhubarb"
             ],
             "time": "2018-11-28T23:47:43+00:00"
-        },
-        {
-            "name": "rhubarbphp/scaffold-authentication-with-roles",
-            "version": "1.2.2",
-            "source": {
-                "type": "git",
-                "url": "https://github.com/RhubarbPHP/Scaffold.AuthenticationWithRoles.git",
-                "reference": "7402e741b67f1936dfbb3d3ae6e1f6193c226f9b"
-            },
-            "dist": {
-                "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Scaffold.AuthenticationWithRoles/zipball/7402e741b67f1936dfbb3d3ae6e1f6193c226f9b",
-                "reference": "7402e741b67f1936dfbb3d3ae6e1f6193c226f9b",
-                "shasum": ""
-            },
-            "require": {
-                "rhubarbphp/custard": "^1.0",
-                "rhubarbphp/module-stem": "^1.2",
-                "rhubarbphp/rhubarb": "^1.1",
-                "rhubarbphp/scaffold-authentication": ">0.99"
-            },
-            "require-dev": {
-                "codeception/codeception": "2.1.*"
-            },
-            "type": "library",
-            "autoload": {
-                "psr-4": {
-                    "Rhubarb\\Scaffolds\\AuthenticationWithRoles\\": "src/",
-                    "Rhubarb\\Scaffolds\\AuthenticationWithRoles\\Tests\\": "tests/"
-                }
-            },
-            "notification-url": "https://packagist.org/downloads/",
-            "license": [
-                "Apache-2.0"
-            ],
-            "description": "Extends the basic authentication scaffold with groups and role based permissions.",
-            "homepage": "http://www.rhubarbphp.com/",
-            "keywords": [
-                "Authentication",
-                "framework",
-                "php",
-                "rhubarb"
-            ],
-            "time": "2017-11-17T09:38:31+00:00"
         },
         {
             "name": "slim/slim",
