@@ -27,6 +27,7 @@ use Rhubarb\RestApi\RhubarbApiModule;
 use Rhubarb\Scaffolds\Authentication\User;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\DefaultUserEntityAdapter;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\UserEntityAdapter;
+use Rhubarb\Stem\Schema\SolutionSchema;
 use Slim\App;
 use Slim\Http\Request;
 use Slim\Http\Response;
@@ -65,7 +66,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         }
         /** @var LoginProvider $login */
         $login = LoginProvider::getProvider();
-        $login->forceLogin(new User($decoded['user']));
+        $login->forceLogin(SolutionSchema::getModel(User::class, $decoded['user']));
     }
 
     protected function authenticate(Request $request)
