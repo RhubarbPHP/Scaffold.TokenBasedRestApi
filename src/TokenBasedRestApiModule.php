@@ -108,7 +108,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
     {
         $self = $this;
 
-        $app->any('/token', function (Request $request, Response $response) use ($self) {
+        $app->any('/token/', function (Request $request, Response $response) use ($self) {
             if ($request->getMethod() !== 'POST') {
                 throw new MethodNotAllowedException();
             }
@@ -131,10 +131,11 @@ class TokenBasedRestApiModule implements RhubarbApiModule
                     ->withStatus(401, 'Access Denied');
             }
         });
-        $app->get('/me', function (Request $request, Response $response) {
+        $app->get('/me/', function (Request $request, Response $response) {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
-            return UserEntityAdapter::get($login->loggedInUserIdentifier, $request, $response);
+            $adapter = new UserEntityAdapter();
+            return $adapter->get($request, $response, $login->loggedInUserIdentifier);
         });
     }
 }
