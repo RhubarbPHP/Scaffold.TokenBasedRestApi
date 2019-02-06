@@ -19,7 +19,6 @@
 namespace Rhubarb\Scaffolds\TokenBasedRestApi;
 
 use Firebase\JWT\JWT;
-use Psr\Http\Message\ServerRequestInterface;
 use Rhubarb\Crown\DependencyInjection\Container;
 use Rhubarb\Crown\LoginProviders\LoginProvider;
 use Rhubarb\RestApi\Exceptions\MethodNotAllowedException;
@@ -56,7 +55,17 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         Container::current()->registerClass(UserEntityAdapter::class, DefaultUserEntityAdapter::class);
     }
 
-    protected function validatePayload($decoded)
+    protected function validateUserRequest(Request $request, User $user): bool
+    {
+        return true;
+    }
+
+    protected function validateUser(User $user): bool
+    {
+        return true;
+    }
+
+    protected function validatePayload(Request $request, $decoded)
     {
         if ($decoded['expires'] < (new \DateTime())->getTimestamp()) {
             throw new \Exception('Session Expired', 401);
@@ -66,7 +75,15 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         }
         /** @var LoginProvider $login */
         $login = LoginProvider::getProvider();
-        $login->forceLogin(SolutionSchema::getModel(User::class, $decoded['user']));
+        /** @var User $user */
+        $user = SolutionSchema::getModel(User::class, $decoded['user']);
+        if (!$this->validateUser($user)) {
+            throw new \Exception('Invalid User', 401);
+        }
+        if (!$this->validateUserRequest($request, $user)) {
+            throw new \Exception('Access Denied', 403);
+        }
+        $login->forceLogin($user);
     }
 
     protected function authenticate(Request $request)
@@ -94,8 +111,8 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         return new JwtAuthentication([
             'secret' => $this->secret,
             'ignore' => $this->ignore,
-            'before' => function (ServerRequestInterface $request, $arguments) use ($self) {
-                $self->validatePayload($arguments['decoded']);
+            'before' => function (Request $request, $arguments) use ($self) {
+                $self->validatePayload($request, $arguments['decoded']);
             },
         ]);
     }

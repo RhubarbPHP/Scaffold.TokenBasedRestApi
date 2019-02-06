@@ -694,12 +694,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/RhubarbPHP/Module.RestApi.git",
-                "reference": "8704d85404e38bd41e090a20179c5539038079fe"
+                "reference": "1a9e072b69342fb32f73fb79b66728aabfc76127"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/8704d85404e38bd41e090a20179c5539038079fe",
-                "reference": "8704d85404e38bd41e090a20179c5539038079fe",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/1a9e072b69342fb32f73fb79b66728aabfc76127",
+                "reference": "1a9e072b69342fb32f73fb79b66728aabfc76127",
                 "shasum": ""
             },
             "require": {
@@ -721,7 +721,7 @@
                 "Apache-2.0"
             ],
             "description": "An module for building ReSTful API services",
-            "time": "2019-02-06T11:16:28+00:00"
+            "time": "2019-02-06T18:42:58+00:00"
         },
         {
             "name": "rhubarbphp/module-stem",
