@@ -7,7 +7,7 @@ use Rhubarb\RestApi\Adapters\Stem\LegacyStemEntityAdapter;
 
 class DefaultUserEntityAdapter extends LegacyStemEntityAdapter
 {
-    protected static function getModelClass(): string
+    protected function getModelClass(): string
     {
         return User::class;
     }
