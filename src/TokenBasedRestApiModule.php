@@ -133,15 +133,20 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             if ($user = $self->authenticate($request)) {
                 $expiry = new \DateTime();
                 $expiry->add(new\DateInterval('P1D'));
-                return $response
-                    ->write(JWT::encode(
+
+                $data = [
+                    'token' => JWT::encode(
                         [
                             'expires' => $expiry->getTimestamp(),
                             'user' => $user,
                         ],
                         $self->secret,
                         $self->algorithm
-                    ))
+                    )
+                ];
+
+                return $response
+                    ->withJson($data)
                     ->withStatus(201, 'Created');
             } else {
                 return $response
