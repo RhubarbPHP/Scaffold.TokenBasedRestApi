@@ -88,8 +88,20 @@ class TokenBasedRestApiModule implements RhubarbApiModule
 
     protected function authenticate(Request $request)
     {
+        $authorizationHeader = $request->getHeader('Authorization');
+
+        if (empty($authorizationHeader)) {
+            return false;
+        }
+
         $authHeader = $request->getHeader('Authorization')[0];
-        list($user, $password) = explode(':', base64_decode(str_replace('Basic ', '', $authHeader)), 2);
+        $loginCredentials = explode(':', base64_decode(str_replace('Basic ', '', $authHeader)), 2);
+
+        if (count($loginCredentials) < 2) {
+            return false;
+        }
+
+        list($user, $password) = $loginCredentials;
         try {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
