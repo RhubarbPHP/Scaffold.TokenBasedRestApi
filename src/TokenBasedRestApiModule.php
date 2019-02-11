@@ -109,6 +109,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
     {
         $self = $this;
         return new JwtAuthentication([
+            'secure' => false,
             'secret' => $this->secret,
             'ignore' => $this->ignore,
             'before' => function (Request $request, $arguments) use ($self) {
