@@ -20,6 +20,7 @@ namespace Rhubarb\Scaffolds\TokenBasedRestApi;
 
 use Firebase\JWT\JWT;
 use Rhubarb\Crown\DependencyInjection\Container;
+use Rhubarb\Crown\LoginProviders\Exceptions\LoginFailedException;
 use Rhubarb\Crown\LoginProviders\LoginProvider;
 use Rhubarb\RestApi\Exceptions\MethodNotAllowedException;
 use Rhubarb\RestApi\RhubarbApiModule;
@@ -91,14 +92,14 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $authorizationHeader = $request->getHeader('Authorization');
 
         if (empty($authorizationHeader)) {
-            return false;
+            return [false, 'Invalid payload'];
         }
 
         $authHeader = $request->getHeader('Authorization')[0];
         $loginCredentials = explode(':', base64_decode(str_replace('Basic ', '', $authHeader)), 2);
 
         if (count($loginCredentials) < 2) {
-            return false;
+            return [false, 'Invalid payload'];
         }
 
         list($user, $password) = $loginCredentials;
@@ -106,9 +107,15 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
             $login->login($user, $password);
-            return $login->loggedInUserIdentifier;
+            return [true, $login->loggedInUserIdentifier];
         } catch (\Exception $exception) {
-            return false;
+            $message = '';
+
+            if ($exception instanceof LoginFailedException) {
+                $message = $exception->getPublicMessage();
+            }
+
+            return [false, $message];
         }
     }
 
@@ -143,7 +150,10 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             if ($request->getMethod() !== 'POST') {
                 throw new MethodNotAllowedException();
             }
-            if ($user = $self->authenticate($request)) {
+            
+            list($status, $authData) = $self->authenticate($request);
+            
+            if ($status) {
                 $expiry = new \DateTime();
                 $expiry->add(new\DateInterval('P1D'));
 
@@ -151,7 +161,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
                     'token' => JWT::encode(
                         [
                             'expires' => $expiry->getTimestamp(),
-                            'user' => $user,
+                            'user' => $authData,
                         ],
                         $self->secret,
                         $self->algorithm
@@ -163,6 +173,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
                     ->withStatus(201, 'Created');
             } else {
                 return $response
+                    ->withJson(['message' => $authData])
                     ->withAddedHeader('WWW_Authenticate', 'Basic')
                     ->withStatus(401, 'Access Denied');
             }
