@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "69db9cf7d77a96acaa910c4c6ea5ed09",
+    "content-hash": "02b5d41dc45f7fab9a99343eef7eade2",
     "packages": [
         {
             "name": "container-interop/container-interop",
@@ -690,16 +690,16 @@
         },
         {
             "name": "rhubarbphp/module-restapi",
-            "version": "v3.x-dev",
+            "version": "3.0.0",
             "source": {
                 "type": "git",
                 "url": "https://github.com/RhubarbPHP/Module.RestApi.git",
-                "reference": "1a9e072b69342fb32f73fb79b66728aabfc76127"
+                "reference": "35b2eaaec4269c8330e668a87a12a30e062fd350"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/1a9e072b69342fb32f73fb79b66728aabfc76127",
-                "reference": "1a9e072b69342fb32f73fb79b66728aabfc76127",
+                "url": "https://api.github.com/repos/RhubarbPHP/Module.RestApi/zipball/35b2eaaec4269c8330e668a87a12a30e062fd350",
+                "reference": "35b2eaaec4269c8330e668a87a12a30e062fd350",
                 "shasum": ""
             },
             "require": {
@@ -721,7 +721,7 @@
                 "Apache-2.0"
             ],
             "description": "An module for building ReSTful API services",
-            "time": "2019-02-06T18:42:58+00:00"
+            "time": "2019-02-21T10:28:33+00:00"
         },
         {
             "name": "rhubarbphp/module-stem",
@@ -1377,16 +1377,16 @@
         },
         {
             "name": "codeception/codeception",
-            "version": "2.5.3",
+            "version": "2.5.4",
             "source": {
                 "type": "git",
                 "url": "https://github.com/Codeception/Codeception.git",
-                "reference": "19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0"
+                "reference": "a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0",
-                "reference": "19f0fe845c0af5af2a6c094dc0df3a178a3fd5b0",
+                "url": "https://api.github.com/repos/Codeception/Codeception/zipball/a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9",
+                "reference": "a2ecfe2f3ad36cc29904d2d566b0d7280854e6c9",
                 "shasum": ""
             },
             "require": {
@@ -1465,7 +1465,7 @@
                 "functional testing",
                 "unit testing"
             ],
-            "time": "2019-02-02T15:39:58+00:00"
+            "time": "2019-02-20T20:45:25+00:00"
         },
         {
             "name": "codeception/phpunit-wrapper",
@@ -3341,18 +3341,9 @@
             "time": "2018-12-25T11:19:39+00:00"
         }
     ],
-    "aliases": [
-        {
-            "alias": "3.0.0",
-            "alias_normalized": "3.0.0.0",
-            "version": "3.9999999.9999999.9999999-dev",
-            "package": "rhubarbphp/module-restapi"
-        }
-    ],
+    "aliases": [],
     "minimum-stability": "stable",
-    "stability-flags": {
-        "rhubarbphp/module-restapi": 20
-    },
+    "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],

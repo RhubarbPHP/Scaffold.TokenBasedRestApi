@@ -1,5 +1,14 @@
 # Change Log
 
+### 3.0.1
+
+* Updated: dependencies
+* Added:   missing changelog entries
+
+### 3.0.0
+
+* Changed:  now just a wrapper for Slim JWT plugin with some routes
+
 ### 2.0.4
 
 * Fixed:    Reverting previous change on LoginProvider as the previous change prevented dependency injection from being used 
