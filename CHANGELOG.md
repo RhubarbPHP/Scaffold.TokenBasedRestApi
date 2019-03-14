@@ -1,5 +1,13 @@
 # Change Log
 
+### 3.0.3
+
+* Added: cookie auth support
+
+### 3.0.2
+
+• Fixed: Build source
+
 ### 3.0.1
 
 * Updated: dependencies
