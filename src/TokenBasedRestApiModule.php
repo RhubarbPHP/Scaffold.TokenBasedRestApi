@@ -134,6 +134,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             'before' => function (Request $request, $arguments) use ($self) {
                 $self->validatePayload($request, $arguments['decoded']);
             },
+            'cookie' => 'AuthToken',
         ]);
     }
 
