@@ -181,13 +181,13 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $app->get('/me/', function (Request $request, Response $response) {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
-            $adapter = new UserEntityAdapter();
+            $adapter = Container::instance(UserEntityAdapter::class);
             return $adapter->get($request, $response, $login->loggedInUserIdentifier);
         });
         $app->put('/me/', function (Request $request, Response $response) {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
-            $adapter = new UserEntityAdapter();
+            $adapter = Container::instance(UserEntityAdapter::class);
             return $adapter->put($request, $response, $login->loggedInUserIdentifier);
         });
     }
