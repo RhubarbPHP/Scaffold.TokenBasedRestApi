@@ -148,6 +148,10 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $self = $this;
 
         $app->any('/token/', function (Request $request, Response $response) use ($self) {
+            if ($request->getMethod() == 'OPTIONS') {
+                return;
+            }
+
             if ($request->getMethod() !== 'POST') {
                 throw new MethodNotAllowedException();
             }
