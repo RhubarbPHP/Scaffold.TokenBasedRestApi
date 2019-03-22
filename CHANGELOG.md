@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.0.4
+
+* Added:   Allowed OPTIONS header
+
 ### 3.0.3
 
 * Added: cookie auth support
