@@ -119,6 +119,19 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         }
     }
 
+    public function createJwtTokenForLoggedInUser($authData) : string {
+        $expiry = new \DateTime('now +1 day');
+
+        return JWT::encode(
+            [
+                'expires' => $expiry->getTimestamp(),
+                'user' => $authData,
+            ],
+            $this->secret,
+            $this->algorithm
+        );
+    }
+
     public function registerErrorHandlers(App $app)
     {
 
@@ -159,18 +172,8 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             list($status, $authData) = $self->authenticate($request);
             
             if ($status) {
-                $expiry = new \DateTime();
-                $expiry->add(new\DateInterval('P1D'));
-
                 $data = [
-                    'token' => JWT::encode(
-                        [
-                            'expires' => $expiry->getTimestamp(),
-                            'user' => $authData,
-                        ],
-                        $self->secret,
-                        $self->algorithm
-                    )
+                    'token' => $self->createJwtTokenForLoggedInUser($authData)
                 ];
 
                 return $response
@@ -193,7 +196,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
             $adapter = new UserEntityAdapter();
-            return $adapter->put($request, $response, $login->loggedInUserIdentifier);
+            return $adapter->put($request, $response, $login->loggedInUserIdentifier, $login->loggedInUserIdentifier);
         });
     }
 }

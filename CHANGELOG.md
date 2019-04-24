@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.0.5
+
+* Changed: Extract JWT token generation to a public function so it can be used from other places.
+
 ### 3.0.4
 
 * Added:   Allowed OPTIONS header
