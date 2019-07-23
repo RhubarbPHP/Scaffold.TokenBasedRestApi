@@ -119,8 +119,8 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         }
     }
 
-    public function createJwtTokenForLoggedInUser($authData) : string {
-        $expiry = new \DateTime('now +1 day');
+    public function createJwtTokenForLoggedInUser($authData, $expiry = null) : string {
+        $expiry = isset($expiry) ? $expiry : new \DateTime('now +1 day');
 
         return JWT::encode(
             [
@@ -170,10 +170,12 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             }
             
             list($status, $authData) = $self->authenticate($request);
+            $rememberMe = $request->getParsedBodyParam('rememberMe');
+            $expiry = $rememberMe ? new \DateTime('now +30 day'): new \DateTime('now +1 day');
             
             if ($status) {
                 $data = [
-                    'token' => $self->createJwtTokenForLoggedInUser($authData)
+                    'token' => $self->createJwtTokenForLoggedInUser($authData, $expiry)
                 ];
 
                 return $response

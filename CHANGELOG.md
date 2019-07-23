@@ -1,5 +1,9 @@
 # Change Log
 
+### 3.0.6
+
+* Added: RememberMe body parameter for extending login token to 30 days rather than 1 day.
+
 ### 3.0.5
 
 * Changed: Extract JWT token generation to a public function so it can be used from other places.
