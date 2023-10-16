@@ -29,8 +29,9 @@ use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\DefaultUserEntityAdapter;
 use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\UserEntityAdapter;
 use Rhubarb\Stem\Schema\SolutionSchema;
 use Slim\App;
-use Slim\Http\Request;
+use Psr\Http\Message\ServerRequestInterface as Request;
 use Slim\Http\Response;
+use Slim\Routing\RouteCollectorProxy;
 use Tuupola\Middleware\JwtAuthentication;
 
 class TokenBasedRestApiModule implements RhubarbApiModule
@@ -156,11 +157,11 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         $app->add($this->createJWTMiddleWare());
     }
 
-    public function registerRoutes(App $app)
+    public function registerRoutes(RouteCollectorProxy $group)
     {
         $self = $this;
 
-        $app->any('/token/', function (Request $request, Response $response) use ($self) {
+        $group->any('/token/', function (Request $request, Response $response) use ($self) {
             if ($request->getMethod() == 'OPTIONS') {
                 return;
             }
@@ -170,7 +171,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             }
             
             list($status, $authData) = $self->authenticate($request);
-            $rememberMe = $request->getParsedBodyParam('rememberMe');
+            $rememberMe = $request->getParsedBody()['rememberMe'];
             $expiry = $rememberMe ? new \DateTime('now +30 day'): new \DateTime('now +1 day');
             
             if ($status) {
@@ -188,13 +189,13 @@ class TokenBasedRestApiModule implements RhubarbApiModule
                     ->withStatus(401, 'Access Denied');
             }
         });
-        $app->get('/me/', function (Request $request, Response $response) {
+        $group->get('/me/', function (Request $request, Response $response) {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
             $adapter = new UserEntityAdapter();
             return $adapter->get($request, $response, $login->loggedInUserIdentifier);
         });
-        $app->put('/me/', function (Request $request, Response $response) {
+        $group->put('/me/', function (Request $request, Response $response) {
             /** @var LoginProvider $login */
             $login = LoginProvider::getProvider();
             $adapter = new UserEntityAdapter();
