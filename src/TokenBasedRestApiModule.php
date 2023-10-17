@@ -30,7 +30,7 @@ use Rhubarb\Scaffolds\TokenBasedRestApi\Adapters\Users\UserEntityAdapter;
 use Rhubarb\Stem\Schema\SolutionSchema;
 use Slim\App;
 use Psr\Http\Message\ServerRequestInterface as Request;
-use Slim\Http\Response;
+use Psr\Http\Message\ResponseInterface as Response;
 use Slim\Routing\RouteCollectorProxy;
 use Tuupola\Middleware\JwtAuthentication;
 
@@ -173,18 +173,19 @@ class TokenBasedRestApiModule implements RhubarbApiModule
             list($status, $authData) = $self->authenticate($request);
             $rememberMe = $request->getParsedBody()['rememberMe'];
             $expiry = $rememberMe ? new \DateTime('now +30 day'): new \DateTime('now +1 day');
-            
+
             if ($status) {
                 $data = [
                     'token' => $self->createJwtTokenForLoggedInUser($authData, $expiry)
                 ];
 
-                return $response
-                    ->withJson($data)
-                    ->withStatus(201, 'Created');
+                $payload = json_encode($data);
+                $response->getBody()->write($payload);
+                return $response->withStatus(201, 'Created');
             } else {
+                $payload = json_encode(['message' => $authData]);
+                $response->getBody()->write($payload);
                 return $response
-                    ->withJson(['message' => $authData])
                     ->withAddedHeader('WWW_Authenticate', 'Basic')
                     ->withStatus(401, 'Access Denied');
             }
