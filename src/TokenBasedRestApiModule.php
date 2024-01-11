@@ -152,7 +152,7 @@ class TokenBasedRestApiModule implements RhubarbApiModule
         ]);
     }
 
-    public function registerMiddleware(App $app)
+    public function registerMiddleware(RouteCollectorProxy $app)
     {
         $app->add($this->createJWTMiddleWare());
     }
