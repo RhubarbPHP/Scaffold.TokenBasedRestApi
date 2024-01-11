@@ -11,7 +11,7 @@
     }
   },
   "require": {
-    "rhubarbphp/module-restapi": "^3.0",
+    "rhubarbphp/module-restapi": "dev-feature/upgrade-to-slim-v4",
     "rhubarbphp/rhubarb": "^1.1",
     "tuupola/slim-jwt-auth": "^3.2",
     "rhubarbphp/scaffold-authentication": "^1.3"
