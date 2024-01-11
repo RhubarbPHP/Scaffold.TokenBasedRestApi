@@ -1,5 +1,10 @@
 # Change Log
 
+### 4.0.0
+
+* Added: Upgraded Slim and it's dependencies to 4.4.0. This Slim upgrade contains breaking changes so went up a
+         major version for safety.
+
 ### 3.0.6
 
 * Added: RememberMe body parameter for extending login token to 30 days rather than 1 day.
